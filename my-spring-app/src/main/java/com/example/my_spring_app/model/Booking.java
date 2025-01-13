@@ -33,6 +33,9 @@ public class Booking {
     @NotNull
     private LocalDateTime endDate;
 
+    @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
+    private EventDetails eventDetails;
+
     public Long getId() {
         return id;
     }
@@ -79,5 +82,13 @@ public class Booking {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public EventDetails getEventDetails() {
+        return eventDetails;
+    }
+
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
 }

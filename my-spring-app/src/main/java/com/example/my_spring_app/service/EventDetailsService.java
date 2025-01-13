@@ -20,12 +20,12 @@ public class EventDetailsService {
     private BookingRepository bookingRepository;
 
     public EventDetails createEventDetails(EventDetails eventDetails) {
-        Optional<Booking> booking = bookingRepository.findById(eventDetails.getBookingId());
+        Optional<Booking> booking = bookingRepository.findById(eventDetails.getBooking().getId());
         if (booking.isPresent()) {
-            eventDetails.setBookingId(booking.get().getId());
+            eventDetails.setBooking(booking.get());
             return eventDetailsRepository.save(eventDetails);
         } else {
-            throw new RuntimeException("Booking not found with id: " + eventDetails.getBookingId());
+            throw new RuntimeException("Booking not found with id: " + eventDetails.getBooking().getId());
         }
     }
 

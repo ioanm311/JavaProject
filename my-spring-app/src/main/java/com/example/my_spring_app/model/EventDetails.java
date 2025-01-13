@@ -14,8 +14,9 @@ public class EventDetails {
     @Column(length = 500)
     private String description;
 
-    @NotNull
-    private Long bookingId;
+    @OneToOne
+    @JoinColumn(name = "booking_id", nullable = false)
+    private Booking booking;
 
 
     public Long getId() {
@@ -34,11 +35,11 @@ public class EventDetails {
         this.description = description;
     }
 
-    public Long getBookingId() {
-        return bookingId;
+    public Booking getBooking() {
+        return booking;
     }
 
-    public void setBookingId(Long bookingId) {
-        this.bookingId = bookingId;
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 }
