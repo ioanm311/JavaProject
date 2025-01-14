@@ -14,11 +14,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public User registerUser(User user) {
-        // verificare email
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("The email is already in use.");
         }
-        // salvam user
         return userRepository.save(user);
     }
 
@@ -31,12 +29,10 @@ public class UserService {
         }
     }
 
-    // Obține lista tuturor utilizatorilor (admin only)
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // Șterge un utilizator după ID (admin only)
     public void deleteUser(Long id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
