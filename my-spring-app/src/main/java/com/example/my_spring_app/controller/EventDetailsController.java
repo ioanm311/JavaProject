@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +34,13 @@ public class EventDetailsController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get event details by ID", description = "Fetches specific event details by its ID.")
-    public EventDetails getEventDetailsById(@PathVariable @Parameter(description = "ID of the event details to fetch") Long id) {
-        return eventDetailsService.getEventDetailsById(id).orElse(null);  // Poți adăuga o excepție personalizată dacă vrei
+    public ResponseEntity<EventDetails> getEventDetailsById(@PathVariable @Parameter(description = "ID of the event details to fetch") Long id) {
+        try {
+            EventDetails eventDetails = eventDetailsService.getEventDetailsById(id);
+            return new ResponseEntity<>(eventDetails, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);  // Dacă nu găsim EventDetails, returnăm 404
+        }
     }
 
     @DeleteMapping("/{id}")
